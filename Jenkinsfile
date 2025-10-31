@@ -2,21 +2,31 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
-        DOCKER_IMAGE = 'jampallykeerthi/url-click-analytics'
+        DOCKER_USER = "jampallykeerthi"
+        DOCKER_PASS = "Keerthi@88"
+        IMAGE_NAME = "url-click-analytics"
+        IMAGE_TAG = "v1"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/Keerthi157-oss/casestudy.git'
+                git 'https://github.com/jampallykeerthi/url_click_analytics.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t $DOCKER_IMAGE:$BUILD_NUMBER .'
+                    sh "docker build -t ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    sh "echo ${DOCKER_PASS} | docker login -u ${DOCKER_USER} --password-stdin"
                 }
             }
         }
@@ -24,12 +34,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    sh '''
-                        echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin
-                        docker push $DOCKER_IMAGE:$BUILD_NUMBER
-                        docker tag $DOCKER_IMAGE:$BUILD_NUMBER $DOCKER_IMAGE:latest
-                        docker push $DOCKER_IMAGE:latest
-                    '''
+                    sh "docker push ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
         }
@@ -47,11 +52,8 @@ pipeline {
     }
 
     post {
-        success {
-            echo '✅ Deployment successful! The latest version is live on Kubernetes.'
-        }
-        failure {
-            echo '❌ Deployment failed. Please check Jenkins logs for details.'
+        always {
+            echo 'Pipeline completed.'
         }
     }
 }

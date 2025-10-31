@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // ✅ Fetch code from GitHub using Jenkins credentials
                 git branch: 'main',
-                    url: 'https://github.com/jampallykeerthi/casestudy.git',
+                    url: 'https://github.com/Keerthi157-oss/casestudy.git',
                     credentialsId: 'github-credentials'
             }
         }

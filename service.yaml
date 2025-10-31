@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: url-click-analytics-svc
+spec:
+  selector:
+    app: url-click-analytics
+  ports:
+    - port: 80
+      targetPort: 5000
+  type: LoadBalancer

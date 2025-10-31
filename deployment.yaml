@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: url-click-analytics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: url-click-analytics
+  template:
+    metadata:
+      labels:
+        app: url-click-analytics
+    spec:
+      containers:
+      - name: app
+        image: yourdockerhubusername/url-click-analytics:latest
+        ports:
+        - containerPort: 5000

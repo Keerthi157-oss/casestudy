@@ -1,0 +1,5 @@
+<!doctype html>
+<html><head><title>URL Click Analytics</title></head>
+<body><h1>Click Links Below</h1><ul>
+{% for u in urls %}<li><a href="/t/{{u.id}}" target="_blank">{{u.label}}</a></li>{% endfor %}
+</ul><a href="/dashboard">View Dashboard</a></body></html>

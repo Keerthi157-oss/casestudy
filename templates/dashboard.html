@@ -1,0 +1,6 @@
+<!doctype html>
+<html><head><title>Dashboard</title></head>
+<body><h1>Click Analytics Dashboard</h1>
+<table border="1"><tr><th>URL</th><th>Clicks</th></tr>
+{% for k,v in stats.items() %}<tr><td>{{k}}</td><td>{{v}}</td></tr>{% else %}<tr><td colspan=2>No data</td></tr>{% endfor %}
+</table><a href="/">Back</a></body></html>

@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/jampallykeerthi/url_click_analytics.git'
+                git 'https://github.com/jampallykeerthi/casestudy.git'
             }
         }
 
